@@ -46,4 +46,7 @@ private:
   int loadHighScore();
   void saveHighScore(int highScore);
   Sound explosion;
+  Sound alienExp;
+  Sound ouch;
+  Sound GameOverSound;
 };

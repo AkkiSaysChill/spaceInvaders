@@ -19,4 +19,5 @@ private:
   Texture2D image;
   Vector2 position;
   double lastFire;
+  Sound shoot;
 };

@@ -1,4 +1,5 @@
 #include "src/game.hpp"
+#include "src/splashScreen.hpp"
 #include <cstdio>
 #include <raylib.h>
 #include <string>
@@ -22,7 +23,9 @@ int main(int argc, char *argv[]) {
   InitAudioDevice();
 
   Font font = LoadFontEx("assets/fonts/Doto/Doto.ttf", 64, 0, 0);
-
+  Font Splash = LoadFontEx("assets/fonts/Doto/Super.ttf", 64, 0, 0);
+  SplashScreen splash(Splash, yellow);
+  splash.Show();
   Texture2D spaceshipImage = LoadTexture("assets/ship.png");
 
   SetTargetFPS(60);
@@ -31,7 +34,10 @@ int main(int argc, char *argv[]) {
   while (WindowShouldClose() == false) {
 
     SetMusicVolume(game.music, 1.0f); // 1.0 is max volume
-    UpdateMusicStream(game.music);
+    if (game.run) {
+
+      UpdateMusicStream(game.music);
+    }
     game.HandleInput();
     game.Update();
     BeginDrawing();

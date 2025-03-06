@@ -9,6 +9,10 @@
 Game::Game() {
   music = LoadMusicStream("assets/audios/music.mp3");
   PlayMusicStream(music);
+  explosion = LoadSound("assets/audios/explosion.wav");
+  alienExp = LoadSound("assets/audios/alien_exp.wav");
+  ouch = LoadSound("assets/audios/hitHurt.wav");
+  GameOverSound = LoadSound("assets/audios/go.mp3");
   InitGame();
 }
 
@@ -187,6 +191,7 @@ void Game::CheckCollisions() {
         checkHighScore();
         it = aliens.erase(it); // Erase and get the next valid iterator
         laser.active = false;  // Deactivate the laser
+        PlaySound(alienExp);
       } else {
         ++it; // Only increment if no collision happened
       }
@@ -209,6 +214,7 @@ void Game::CheckCollisions() {
       laser.active = false;
       score += 500;
       checkHighScore();
+      PlaySound(explosion);
     }
   }
 
@@ -217,6 +223,7 @@ void Game::CheckCollisions() {
     if (CheckCollisionRecs(laser.getRect(), spaceship.getRect())) {
       laser.active = false;
       lives--;
+      PlaySound(ouch);
       if (lives == 0) {
         GameOver();
       }
@@ -253,7 +260,11 @@ void Game::CheckCollisions() {
   }
 }
 
-void Game::GameOver() { run = false; }
+void Game::GameOver() {
+
+  PlaySound(GameOverSound);
+  run = false;
+}
 
 void Game::InitGame() {
   obsticle = CreateObsticles();
